@@ -17,6 +17,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.sceneView = ARSCNView(frame: self.view.frame)
+        self.view.addSubview(self.sceneView)
+        
         // Set the view's delegate
         sceneView.delegate = self
         
@@ -25,6 +28,20 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Create a new scene
         let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        
+        
+        let box = SCNBox(width: 0.2, height: 0.2, length: 0.2, chamferRadius:0)
+        
+        let material = SCNMaterial()
+        material.diffuse.contents = UIColor.blue
+        
+        let node = SCNNode()
+        node.geometry = box
+        node.geometry?.materials = [material]
+        node.position = SCNVector3(0 , 0.2 , -0.5)
+        
+        
+        scene.rootNode.addChildNode(node)
         
         // Set the scene to the view
         sceneView.scene = scene
